@@ -6,15 +6,15 @@ El videojuego es un juego de turnos tipo Pokemón. El juego iene una idea simple
 ## Funcionalidad
 El programa hace uso de clases para poder crear los objetos requeridos para el juego. El código contiene tres clases padres o principales, las cúales son ciudad, defensa y monstruo. Cada uno cuenta con atributos y métodos únicos para poder cumplir su función. 
 
-###Defensa:
-Tiene vida, posición en la ciudad, fuerza de ataque  y un rango. El método disparar() ataca directamente a un objeto monstruo para hacer que el atributo vida del monstruo decremente. Mientras que el método activar_escudo() hace que el atributo vida del objeto Defensa no decremente a pesar de que sea atacado.
+Defensa:
+ Tiene vida, posición en la ciudad, fuerza de ataque  y un rango. El método disparar() ataca directamente a un objeto monstruo para hacer que el atributo vida del monstruo decremente. Mientras que el método activar_escudo() hace que el atributo vida del objeto Defensa no decremente a pesar de que sea atacado.
 
-###Ciudad:
-Tiene un porcentaje de destruccion, tamaño, defensas y un porcentaje de generación de defensas. Siendo que el tamaño sea un array de 2 valores, así formando un mapa en el cúal los otros objetos puedan estar ubicados. El porcentaje de generación de defensas consta en el porcentaje de que tantas unidades puede generar por turno o partida. Mientras que el array de defensas guardará las defensas, debido a que los objetos defensa son parte de la ciudad (uso de composición). 
+Ciudad:
+ Tiene un porcentaje de destruccion, tamaño, defensas y un porcentaje de generación de defensas. Siendo que el tamaño sea un array de 2 valores, así formando un mapa en el cúal los otros objetos puedan estar ubicados. El porcentaje de generación de defensas consta en el porcentaje de que tantas unidades puede generar por turno o partida. Mientras que el array de defensas guardará las defensas, debido a que los objetos defensa son parte de la ciudad (uso de composición). 
 Respecto a los métodos, sólo tenemos crear defensas, que será el método que cree objetos del tipo defensas para luego ser guardadas en el array de defensas.
 
-###Monstruo:
-Tiene vida, fuerza de ataque, posición (en dos ejes), nombre y un rango de ataque. Respecto a los métodos, el primero que es ataque(Defensa) hace que el atributo de un objeto defensa decremente. Moverse() es un método para que el monstruo pueda cambiar de posición en el mapa. Por último, este cuenta con el método destruir(Ciudad) para subir el porcentaje de destrucción del objeto ciudad.
+Monstruo:
+ Tiene vida, fuerza de ataque, posición (en dos ejes), nombre y un rango de ataque. Respecto a los métodos, el primero que es ataque(Defensa) hace que el atributo de un objeto defensa decremente. Moverse() es un método para que el monstruo pueda cambiar de posición en el mapa. Por último, este cuenta con el método destruir(Ciudad) para subir el porcentaje de destrucción del objeto ciudad.
 
 Cada uno de estos objetos cuentan con sus accesor methods para poder funcionar.
 
