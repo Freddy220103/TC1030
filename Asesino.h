@@ -16,3 +16,10 @@ public:
     void ataque(int *ptrvidadef);
     void mareo(Defensa *defensa);
 #endif //RAMPAGE_ASESINO_H
+    
+    void Asesino::ataque(int *ptrvidadef){
+        i=0;
+        while(torres_destruidas>=i)
+            *ptrvidadef-fuerza;
+            i++;
+    };
