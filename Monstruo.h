@@ -20,7 +20,7 @@ protected:
 public:
     Monstruo(){};
     Monstruo(string nom, int vid, int fuerz, int rang):nombre(nom),vida(vid),fuerza(fuerz),rango(rang){};
-
+    int *ptrvidamons=&vida;
     void ataque(int *ptrvidadef);
     void moverse();
     //void destruir(Ciudad *ciudad);
