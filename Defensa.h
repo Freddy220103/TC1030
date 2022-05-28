@@ -16,11 +16,14 @@ protected:
     int posicion[3];
     int rango;
     void activar_escudo();
-    void disparar(Monstruo *monstruo);
+    void disparar(int *ptrvidamons);
 public:
     Defensa(){};
     Defensa(string nom, int vid, int fuerz, int rang):nombre(nom),vida(vid),fuerza(fuerz),rango(rang){};
     int *ptrvidadef=&vida;
+};
+void Defensa::disparar(int *ptrvidamons){
+    *ptrvidamons-fuerza;
 };
 
 
