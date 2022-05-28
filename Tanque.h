@@ -11,8 +11,6 @@ public:
     Tanque(){};
     Tanque(string nom, int vid, int fuerz, int rang):nombre(nom),vida(vid),fuerza(fuerz),rango(rang){};
 
-    void ataque(int *ptrvidadef);
-    void moverse();
     void proteger();
     void ataque_destructor();
 #endif //RAMPAGE_TANQUE_H
