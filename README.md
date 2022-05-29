@@ -1,3 +1,5 @@
+Póngale 100 a Freddy profe :)
+
 # TC1030 RAMPAGE
 El proyecto tiene como objetivo demostrar el uso de clases, apuntadores, herencia, composición y agregación mediante un videojuego kaiju.
 
