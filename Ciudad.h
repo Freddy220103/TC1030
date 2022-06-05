@@ -24,6 +24,7 @@ public:
     nombre=nom;
     numero=num;
     porcentaje_destruccion=destruccion;
+    crear_defensas();
     }
     void set_destruccion(int dest);
     void get_citystats();//listo
@@ -32,36 +33,41 @@ public:
     void ordenar_ataque();
 };
 void Ciudad::set_destruccion(int dest){
-    porcentaje_destruccion+=dest;
+    porcentaje_destruccion=porcentaje_destruccion+dest;
 }
 void Ciudad::crear_defensas() {
     int i;
     i=2;
-    if (numero<8){
+    while (numero<8){
         defe[numero] = new Torreta("Torreta de hielo", 50, 2, 9,"vivo");
         numero++;
         defe[numero] = new Transporte("Transporte misiles", 90, 12, 12,"vivo");
         numero++;
     }
-    else{
-        cout<<"La ciudad intentó crear otra defensa, pero ya no tiene recursos"<<endl;
-    }
+    cout<<"La ciudad intentó crear otra defensa, pero ya no tiene recursos"<<endl;
 
 };
 
 void Ciudad::get_defensas(){
-    for (int i = 0; i<numero; i++)
-        cout<<defe[i] -> get_stats();
+    for (int i = 0; i<numero; i++){
+        cout<<"Defensa: "<<i+1<<endl;
+        cout<<defe[i] -> get_stats()<<endl;
+        cout<<"---------------------"<<endl;
+        cout<<" \n";
+    }
 }
 
 void Ciudad::ordenar_ataque() {
-    stringstream aux;
     for (int i = 0; i <numero; i++)
-        aux<<defe[i] -> disparar();
+        if (i%2==0){
+            defe[i] -> disparar();
+        }
+        else{
+            defe[i] -> activar_escudo();
+        }
 }
 void Ciudad::get_citystats(){
     cout<<"Porcentaje de ciudad destruido: "<<porcentaje_destruccion<<endl;
-    //cout<<"Porcentaje de generación: "<<porcentaje_generacion<<endl;
 }
 int Ciudad::get_porcentaje(){
     return porcentaje_destruccion;
