@@ -3,10 +3,10 @@
 //
 #ifndef DEFENSA_H_
 #define DEFENSA_H_
-#include "Monstruo.h"
 #include<iostream>
 #include <string>
 #include <sstream>
+#include "Monstruo.h"
 using namespace std;
 
 class Defensa{
@@ -16,7 +16,6 @@ protected:
     int fuerza;
     int rango;
     string estado;
-    void activar_escudo();
 public:
 
     Defensa(){};
@@ -25,11 +24,11 @@ public:
     virtual string get_stats();
     string disparar();
     void herirse();
+    void activar_escudo();
 
 };
 
 string Defensa::disparar(){
-    //monstruo->herirse();
     stringstream aux;
     aux<<"la defensa ha disparado"<<endl;
     return aux.str();
@@ -56,7 +55,7 @@ void Defensa::herirse(){
 class Torreta:public Defensa{
 private:
     int turnos_congelamiento;
-    int retroceso;
+    int ralentizar;
 public:
     string get_stats();
     Torreta():Defensa("Torreta de hielo", 50, 2, 9,"vivo"){};
@@ -67,13 +66,14 @@ public:
         fuerza=fuerz;
         rango=rang;
         estado=estad;
+        ralentizar=10;
 
     };
             //:Defensa(nombre,vida,fuerza,rango),turnos_congelamiento(turnos), retroceso(retro){};
 };
     string Torreta::get_stats() {
         stringstream aux;
-        aux<< "Nombre: "<<nombre<<"\nVida: "<<vida<<"\nFuerza: "<<fuerza<<"\nRango: "<<rango<<" Retroceso"<<retroceso;
+        aux<< "Nombre: "<<nombre<<"\nVida: "<<vida<<"\nFuerza: "<<fuerza<<"\nRango: "<<rango<<"\nRetroceso"<<ralentizar;
         return aux.str();
     }
 class Transporte:public Defensa{
@@ -90,6 +90,7 @@ public:
         fuerza=fuerz;
         rango=rang;
         estado=estad;
+        cooldown=0;
 
     };
 };
@@ -112,4 +113,3 @@ public:
 };
 
 #endif
-
