@@ -22,11 +22,10 @@ public:
     Monstruo(string nom, int vid, int fuerz, int rang):nombre(nom),vida(vid),fuerza(fuerz),rango(rang){};
     void ataque();
     void moverse();
-    //void destruir(Ciudad *ciudad);
     void estadisticas_monstruo();
     void herirse();
     string get_nombre();
-    void destruir_ciudad();
+    void destruir_ciudad(Ciudad *ciudad);
     void ataque_especial();
 
 };
@@ -37,8 +36,14 @@ void Monstruo::ataque(){
     cout<<"tu monstruo ha atacado"<<endl;
 };
 
-void Monstruo::destruir_ciudad() {
+void Monstruo::destruir_ciudad(Ciudad *ciudad){
     cout<<nombre<<" ha atacado la ciudad"<<endl;
+    ciudad->set_destruccion(fuerza);
+    cout<<"El porcentaje de destruccion actual es de:"<<ciudad->get_porcentaje();
+    cout<<"\n";
+    if(ciudad->get_porcentaje()==100){
+        cout<<"El monstruo ha dado el último golpe a la ciudad"<<endl;
+    }
 }
 void Monstruo::herirse(){
     cout<<"Han herido tu monstruo"<<endl;
@@ -78,7 +83,6 @@ void Asesino::ataque(){
     i=0;
     int resultado;
     while(torres_destruidas>=i)
-        //*ptrvidadef-fuerza;
         resultado=fuerza+torres_destruidas;
     cout<<"el asesino ha atacado"<<endl;
     i++;
@@ -114,4 +118,3 @@ void Tanque::ataque_especial() {
     cout<<"El ataque destructor se ha iniciado"<<endl;
 }
 #endif
-
