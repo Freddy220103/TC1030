@@ -15,7 +15,7 @@ protected:
     int rango;
     string estado;
 public:
-
+    int mareado;
     Defensa(){};
     Defensa(string nom, int vid, int fuerz, int rang, string estad)
             :nombre(nom),vida(vid),fuerza(fuerz),rango(rang){};
@@ -26,6 +26,7 @@ public:
     void set_fuerza(int fuerz);
     int get_fuerza();
     Defensa& operator= (const Defensa&);
+    void mareo();
 
 };
 int Defensa::get_fuerza(){
@@ -56,6 +57,15 @@ void Defensa::herirse(int fuerz){
     vida=vida-fuerz;
 };
 
+void Defensa::mareo(){
+    if (mareado%2==0){
+        cout<<" fue mareada"<<endl;
+    }
+    else{
+        disparar();
+    }
+}
+
 class Torreta:public Defensa{
 private:
     int turnos_congelamiento;
@@ -71,6 +81,7 @@ public:
         rango=rang;
         estado=estad;
         ralentizar=10;
+        mareado=2;
 
     };
     //:Defensa(nombre,vida,fuerza,rango),turnos_congelamiento(turnos), retroceso(retro){};
@@ -96,6 +107,7 @@ public:
         rango=rang;
         estado=estad;
         cooldown=0;
+        mareado=2;
 
     };
 };
@@ -125,6 +137,8 @@ Defensa& Defensa::operator = (const Defensa& param)
 {
     return *this;
 }
+
+
 
 #endif //RAMPAGE_DEFENSA_H
 
