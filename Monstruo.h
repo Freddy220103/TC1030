@@ -3,49 +3,47 @@
 //
 #ifndef MONSTRUO_H_
 #define MONSTRUO_H_
-
 #include<iostream>
-#include "Ciudad.h"
-
-
 using namespace std;
-
 class Monstruo{
 protected:
     string nombre;
     int vida;
     int fuerza;
     int rango;
+    int energia;
 
 public:
     Monstruo(){};
-    Monstruo(string nom, int vid, int fuerz, int rang):nombre(nom),vida(vid),fuerza(fuerz),rango(rang){};
+    Monstruo(string nom, int vid, int fuerz, int rang):nombre(nom),vida(vid),fuerza(fuerz),rango(rang){
+        energia=100;
+    };
     void ataque();
-    void moverse();
+    //void destruir(Ciudad *ciudad);
     void estadisticas_monstruo();
-    void herirse();
+    void herirse(int fuerz);
     string get_nombre();
-    void destruir_ciudad(Ciudad *ciudad);
-    void ataque_especial();
+    void destruir_ciudad();
+    virtual void ataque_especial();
+    int get_fuerza();
 
 };
 string Monstruo::get_nombre() {
     return nombre;
 }
+
+int Monstruo::get_fuerza(){
+    return fuerza;
+}
 void Monstruo::ataque(){
-    cout<<"tu monstruo ha atacado"<<endl;
+    cout<<"Tu monstruo ha atacado"<<endl;
 };
 
-void Monstruo::destruir_ciudad(Ciudad *ciudad){
+void Monstruo::destruir_ciudad(){
     cout<<nombre<<" ha atacado la ciudad"<<endl;
-    ciudad->set_destruccion(fuerza);
-    cout<<"El porcentaje de destruccion actual es de:"<<ciudad->get_porcentaje();
-    cout<<"\n";
-    if(ciudad->get_porcentaje()==100){
-        cout<<"El monstruo ha dado el último golpe a la ciudad"<<endl;
-    }
+
 }
-void Monstruo::herirse(){
+void Monstruo::herirse(int fuerz){
     cout<<"Han herido tu monstruo"<<endl;
 
     //vida-fuerza de la defensa
@@ -60,10 +58,13 @@ void Monstruo::estadisticas_monstruo(){
 void Monstruo::ataque_especial(){
     cout<<"El ataque especial ha iniciado"<<endl;
 }
+
+
 class Asesino:public Monstruo {
 private:
     int torres_destruidas;
     int i;
+    int resultado;
 public:
     Asesino(){};
 
@@ -72,6 +73,8 @@ public:
         vida=vid;
         fuerz=fuerza;
         rango=rang;
+        resultado=0;
+        energia=100;
     };
 
     void ataque();
@@ -81,18 +84,23 @@ public:
 
 void Asesino::ataque(){
     i=0;
-    int resultado;
-    while(torres_destruidas>=i)
-        resultado=fuerza+torres_destruidas;
-    cout<<"el asesino ha atacado"<<endl;
+
+    while(torres_destruidas>=i) {
+        resultado = fuerza + torres_destruidas;
+    }
+    cout<<"El asesino ha atacado"<<endl;
     i++;
 };
 void Asesino::ataque_especial() {
     cout<<get_nombre()<<" ha iniciado el ataque mareo"<<endl;
 }
+
+
 class Tanque:public Monstruo {
 private:
     int rango_escudo;
+    int i;
+    int resultado;
 public:
     Tanque(){};
 
@@ -101,6 +109,9 @@ public:
         vida=vid;
         fuerz=fuerza;
         rango=rang;
+        i=2;
+        resultado=0;
+        energia=100;
     };
 
     void moverse();
@@ -115,6 +126,13 @@ void Tanque::proteger(){
 }
 
 void Tanque::ataque_especial() {
-    cout<<"El ataque destructor se ha iniciado"<<endl;
+    cout << "El ataque destructor se ha iniciado" << endl;
+    if (i % 2 == 0) {
+        resultado = fuerza * 5;
+        i += 2;
+    } else {
+        cout << "El monstruo no tiene el ataque cargado";
+        i += 4;
+    }
 }
 #endif
