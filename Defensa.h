@@ -12,20 +12,19 @@ protected:
     string nombre;
     int vida;
     int fuerza;
-    int rango;
     string estado;
 public:
     int mareado;
     Defensa(){};
-    Defensa(string nom, int vid, int fuerz, int rang, string estad)
-            :nombre(nom),vida(vid),fuerza(fuerz),rango(rang){};
+    Defensa(string nom, int vid, int fuerz,string estad)
+            :nombre(nom),vida(vid),fuerza(fuerz){};
     virtual string get_stats();
     void disparar();
     void herirse(int fuerza);
     void activar_escudo();
     void set_fuerza(int fuerz);
     int get_fuerza();
-    Defensa& operator= (const Defensa&);
+    //Defensa& operator= (const Defensa&);
     void mareo();
 
 };
@@ -36,11 +35,11 @@ void Defensa::set_fuerza(int fuerz) {
     fuerza=fuerza-fuerz;
 }
 void Defensa::disparar(){
-    cout<<" Ha disparado"<<endl;
+    cout<<" ha atacado"<<endl;
 };
 string Defensa::get_stats() {
     stringstream aux;
-    aux<< "Nombre: "<<nombre<<"\nVida: "<<vida<<"\nFuerza: "<<fuerza<<"\nRango: "<<rango<<"\nEstado:"<<estado;
+    aux<< "Nombre: "<<nombre<<"\nVida: "<<vida<<"\nFuerza: "<<fuerza<<"\nEstado:"<<estado;
     return aux.str();
 
 
@@ -60,6 +59,7 @@ void Defensa::herirse(int fuerz){
 void Defensa::mareo(){
     if (mareado%2==0){
         cout<<" fue mareada"<<endl;
+        mareado+=7;
     }
     else{
         disparar();
@@ -68,27 +68,25 @@ void Defensa::mareo(){
 
 class Torreta:public Defensa{
 private:
-    int turnos_congelamiento;
     int ralentizar;
 public:
     string get_stats();
-    Torreta():Defensa("Torreta de hielo", 50, 2, 9,"vivo"){};
-    Torreta(string nom, int vid, int fuerz, int rang, string estad)
-            : Defensa(nom, vid, fuerz, rang,estad){
+    Torreta():Defensa("Torreta de hielo", 50, 2,"vivo"){};
+    Torreta(string nom, int vid, int fuerz, string estad)
+            : Defensa(nom, vid, fuerz,estad){
         nombre=nom;
         vida=vid;
         fuerza=fuerz;
-        rango=rang;
         estado=estad;
         ralentizar=10;
-        mareado=2;
+        mareado=3;
 
     };
     //:Defensa(nombre,vida,fuerza,rango),turnos_congelamiento(turnos), retroceso(retro){};
 };
 string Torreta::get_stats() {
     stringstream aux;
-    aux<< "Nombre: "<<nombre<<"\nVida: "<<vida<<"\nFuerza: "<<fuerza<<"\nRango: "<<rango<<"\nRetroceso: "<<ralentizar;
+    aux<< "Nombre: "<<nombre<<"\nVida: "<<vida<<"\nFuerza: "<<fuerza<<"\nRetroceso: "<<ralentizar;
     return aux.str();
 }
 class Transporte:public Defensa{
@@ -98,22 +96,21 @@ public:
     string get_stats();
     string disparar();
     int get_cooldown();
-    Transporte():Defensa("Transporte de misiles", 90, 12, 12,"vivo"){};
-    Transporte(string nom, int vid, int fuerz, int rang,string estad)
-            : Defensa(nom, vid, fuerz, rang,estad){
+    Transporte():Defensa("Transporte de misiles", 90, 12,"vivo"){};
+    Transporte(string nom, int vid, int fuerz,string estad)
+            : Defensa(nom, vid, fuerz,estad){
         nombre=nom;
         vida=vid;
         fuerza=fuerz;
-        rango=rang;
         estado=estad;
         cooldown=0;
-        mareado=2;
+        mareado=3;
 
     };
 };
 string Transporte::get_stats() {
     stringstream aux;
-    aux<< "Nombre: "<<nombre<<"\nVida: "<<vida<<"\nFuerza: "<<fuerza<<"\nRango: "<<rango<<"\nCooldown: "<<cooldown;;
+    aux<< "Nombre: "<<nombre<<"\nVida: "<<vida<<"\nFuerza: "<<fuerza<<"\nCooldown: "<<cooldown;;
     return aux.str();
 }
 string Transporte::disparar(){
@@ -133,12 +130,7 @@ int Transporte::get_cooldown() {
     return cooldown;
 }
 
-Defensa& Defensa::operator = (const Defensa& param)
-{
-    return *this;
-}
 
 
 
 #endif //RAMPAGE_DEFENSA_H
-
