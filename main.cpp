@@ -99,12 +99,25 @@ int main() {
         }
         cout<<"\n";
         cout<<"Turno de defensas"<<endl;
-        int num;
+        int num, i2, i3;
         num=city.get_numero();
-        int i2;
         i2=0;
+        i3=0;
         for (int i = 0; i <num; i++) {
-            ataque.ordenar_ataque(&city,godzilla,i2);
+
+            if (i3 % 2 == 0) {
+                cout<<"La defensa #"<<i2+1;
+                ataque.disparar(city.defe[i2], &godzilla);
+                ataque.disparar(city.defe[i2], &rodan);
+                i3=i3+9;
+            }
+            else {
+                cout<<"La defensa #"<<i2+1;
+                city.defe[i2]->activar_escudo();
+                i3=i3+=9;
+
+            }
+
             i2++;
         }
     }
@@ -112,3 +125,5 @@ int main() {
     cout<<"GANASTE, felicidades"<<endl;
     return 0;
 }
+
+
