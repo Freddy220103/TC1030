@@ -14,17 +14,18 @@ protected:
     int energia;
 
 public:
+    int es_asesino;
     Monstruo(){};
     Monstruo(string nom, int vid, int fuerz, int rang):nombre(nom),vida(vid),fuerza(fuerz),rango(rang){
         energia=100;
     };
-    void ataque();
+    virtual void ataque()=0;
     //void destruir(Ciudad *ciudad);
     void estadisticas_monstruo();
     void herirse(int fuerz);
     string get_nombre();
     void destruir_ciudad();
-    virtual void ataque_especial();
+    virtual void ataque_especial()=0;
     int get_fuerza();
 
 };
@@ -56,7 +57,14 @@ void Monstruo::estadisticas_monstruo(){
 }
 
 void Monstruo::ataque_especial(){
-    cout<<"El ataque especial ha iniciado"<<endl;
+    if(energia=100){
+        cout<<"El ataque especial ha iniciado"<<endl;
+        energia=0;
+    }
+    else{
+        cout<<"La energía no es suficiente"<<endl;
+        energia+=25;
+    }
 }
 
 
@@ -66,6 +74,8 @@ private:
     int i;
     int resultado;
 public:
+
+
     Asesino(){};
 
     Asesino(string nom, int vid, int fuerz, int rang) : Monstruo(nom, vid, fuerz, rang){
@@ -75,6 +85,7 @@ public:
         rango=rang;
         resultado=0;
         energia=100;
+        es_asesino=1;
     };
 
     void ataque();
@@ -92,7 +103,14 @@ void Asesino::ataque(){
     i++;
 };
 void Asesino::ataque_especial() {
-    cout<<get_nombre()<<" ha iniciado el ataque mareo"<<endl;
+    if(energia=100){
+        cout<<get_nombre()<<" ha iniciado el ataque mareo"<<endl;
+        energia=0;
+    }
+    else{
+        cout<<"La energía no es suficiente"<<endl;
+        energia+=25;
+    }
 }
 
 
@@ -101,7 +119,11 @@ private:
     int rango_escudo;
     int i;
     int resultado;
+
+
 public:
+
+
     Tanque(){};
 
     Tanque(string nom, int vid, int fuerz, int rang) : Monstruo(nom, vid, fuerz, rang){
@@ -112,27 +134,32 @@ public:
         i=2;
         resultado=0;
         energia=100;
+        es_asesino=0;
     };
 
-    void moverse();
-
     void proteger();
-
+    void ataque();
     void ataque_especial();
 };
 
+void Tanque::ataque(){
+    fuerza=20;
+    cout<<get_nombre()<<" ha atacado"<<endl;
+}
 void Tanque::proteger(){
     cout<<"El monstruo se ha protegido"<<endl;
 }
 
 void Tanque::ataque_especial() {
-    cout << "El ataque destructor se ha iniciado" << endl;
-    if (i % 2 == 0) {
-        resultado = fuerza * 5;
-        i += 2;
-    } else {
-        cout << "El monstruo no tiene el ataque cargado";
-        i += 4;
+
+    if(energia=100){
+        cout<<"El monstruo "<<get_nombre()<<" ha iniciado el ataque especial"<<endl;
+        fuerza=100;
+        energia=10;
+    }
+    else{
+        cout<<"La energía no es suficiente"<<endl;
+        energia+=55;
     }
 }
 #endif
