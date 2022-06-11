@@ -1,7 +1,7 @@
 # TC1030 RAMPAGE
 El proyecto tiene como objetivo demostrar el uso de clases, apuntadores, herencia, composición, sobreescritura, sobrecarga, polimorfismo y agregación mediante un videojuego kaiju.
 
-El videojuego es un juego de turnos tipo Pokemón. El juego iene una idea simple, hay una ciudad con un porcentaje de destrucción, siendo que este porcentaje de destrucción irá aumentando cada vez que un monstruo lo ataque. El jugador (ósease el que use el código) tendrá que llegar al porcentaje de destrucción de la ciudad al 100%. Cuando se llegue a este porcentaje, el juego termina. Sin embargo, no será tan sencillo, ya que la ciudad puede generar defensas de dos diferentes tipos que atacan a los monstruos para evitar la destrucción total de todo el lugar. 
+El videojuego es un juego de turnos tipo Pokemón. El juego tiene una idea simple, hay una ciudad con un porcentaje de destrucción, siendo que este porcentaje de destrucción irá aumentando cada vez que un monstruo lo ataque. El jugador (ósease el que use el código) tendrá que llegar al porcentaje de destrucción de la ciudad al 100%. Cuando se llegue a este porcentaje, el juego termina. Sin embargo, no será tan sencillo, ya que la ciudad puede generar defensas de dos diferentes tipos que atacan a los monstruos para evitar la destrucción total de todo el lugar. 
 
 ## Funcionalidad
 El programa hace uso de clases para poder crear los objetos requeridos para el juego. El código contiene tres clases padres o principales, las cúales son ciudad, defensa y monstruo. Cada uno cuenta con atributos y métodos únicos para poder cumplir su función. 
