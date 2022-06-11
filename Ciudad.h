@@ -37,12 +37,11 @@ void Ciudad::crear_defensas() {
     int i;
     i=2;
     while (numero<8){
-        defe[numero] = new Torreta("Torreta de hielo", 50, 2, 9,"vivo");
+        defe[numero] = new Torreta("Torreta de hielo", 10, 2,"vivo");
         numero++;
-        defe[numero] = new Transporte("Transporte misiles", 90, 12, 12,"vivo");
+        defe[numero] = new Transporte("Transporte misiles", 20, 12,"vivo");
         numero++;
     }
-    cout<<"La ciudad intentó crear otra defensa, pero ya no tiene recursos"<<endl;
 
 };
 int Ciudad::get_numero(){
