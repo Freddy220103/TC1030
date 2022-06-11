@@ -1,14 +1,11 @@
 //
 // Creado por Alfredo Gómez Mendoza el 27/05/2022.
 //
-
 #ifndef CIUDAD_H_
 #define CIUDAD_H_
 #include "Defensa.h"
-#include<iostream>
-#include <string>
-#include <sstream>
 using namespace std;
+
 const int maxdef = 8; //constante del tamaño de arreglos
 
 class Ciudad{
@@ -26,11 +23,12 @@ public:
     porcentaje_destruccion=destruccion;
     crear_defensas();
     }
+    int get_numero();
     void set_destruccion(int dest);
     void get_citystats();//listo
     void get_defensas();//listo
     int get_porcentaje();
-    void ordenar_ataque();
+    string get_nombre();
 };
 void Ciudad::set_destruccion(int dest){
     porcentaje_destruccion=porcentaje_destruccion+dest;
@@ -47,7 +45,12 @@ void Ciudad::crear_defensas() {
     cout<<"La ciudad intentó crear otra defensa, pero ya no tiene recursos"<<endl;
 
 };
-
+int Ciudad::get_numero(){
+    return numero;
+}
+string Ciudad::get_nombre(){
+    return nombre;
+}
 void Ciudad::get_defensas(){
     for (int i = 0; i<numero; i++){
         cout<<"Defensa: "<<i+1<<endl;
@@ -57,19 +60,12 @@ void Ciudad::get_defensas(){
     }
 }
 
-void Ciudad::ordenar_ataque() {
-    for (int i = 0; i <numero; i++)
-        if (i%2==0){
-            defe[i] -> disparar();
-        }
-        else{
-            defe[i] -> activar_escudo();
-        }
-}
 void Ciudad::get_citystats(){
     cout<<"Porcentaje de ciudad destruido: "<<porcentaje_destruccion<<endl;
 }
 int Ciudad::get_porcentaje(){
     return porcentaje_destruccion;
 }
+
+
 #endif
