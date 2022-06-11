@@ -10,25 +10,27 @@ protected:
     string nombre;
     int vida;
     int fuerza;
-    int rango;
     int energia;
 
 public:
     int es_asesino;
     Monstruo(){};
-    Monstruo(string nom, int vid, int fuerz, int rang):nombre(nom),vida(vid),fuerza(fuerz),rango(rang){
+    Monstruo(string nom, int vid, int fuerz):nombre(nom),vida(vid),fuerza(fuerz){
         energia=100;
     };
     virtual void ataque()=0;
-    //void destruir(Ciudad *ciudad);
+    virtual void ataque_especial()=0;
     void estadisticas_monstruo();
     void herirse(int fuerz);
     string get_nombre();
     void destruir_ciudad();
-    virtual void ataque_especial()=0;
     int get_fuerza();
+    int get_vida();
 
 };
+int Monstruo::get_vida(){
+    return vida;
+}
 string Monstruo::get_nombre() {
     return nombre;
 }
@@ -46,14 +48,20 @@ void Monstruo::destruir_ciudad(){
 }
 void Monstruo::herirse(int fuerz){
     cout<<"Han herido tu monstruo"<<endl;
-
+    if(vida>=0) {
+        vida = vida - fuerz;
+    }
+    else{
+        cout<<"\n";
+        cout<<"Los latidos de tu monstruo se comienzan a detener\n";
+    }
     //vida-fuerza de la defensa
 };
 void Monstruo::estadisticas_monstruo(){
     cout<<"Turno de monstruo:"<<nombre<<endl;
     cout<<"     Vida: "<<vida<<endl;
     cout<<"     Fuerza: "<<fuerza<<endl;
-    cout<<"     Rango: "<<rango<<endl;
+    cout<<"     Energia: "<<energia<<endl;
 }
 
 void Monstruo::ataque_especial(){
@@ -78,11 +86,10 @@ public:
 
     Asesino(){};
 
-    Asesino(string nom, int vid, int fuerz, int rang) : Monstruo(nom, vid, fuerz, rang){
+    Asesino(string nom, int vid, int fuerz) : Monstruo(nom, vid, fuerz){
         nombre=nom;
         vida=vid;
         fuerz=fuerza;
-        rango=rang;
         resultado=0;
         energia=100;
         es_asesino=1;
@@ -115,24 +122,15 @@ void Asesino::ataque_especial() {
 
 
 class Tanque:public Monstruo {
-private:
-    int rango_escudo;
-    int i;
-    int resultado;
-
-
 public:
 
 
     Tanque(){};
 
-    Tanque(string nom, int vid, int fuerz, int rang) : Monstruo(nom, vid, fuerz, rang){
+    Tanque(string nom, int vid, int fuerz) : Monstruo(nom, vid, fuerz){
         nombre=nom;
         vida=vid;
         fuerz=fuerza;
-        rango=rang;
-        i=2;
-        resultado=0;
         energia=100;
         es_asesino=0;
     };
