@@ -1,10 +1,10 @@
-
 #include <iostream>
-#include "Monstruo.h"
+#include "Ataque.h"
 
 using namespace std;
 int main() {
-    Ciudad city("Queretabasco", 0, 1);
+    Ataque ataque;
+    Ciudad city("Queretabasco", 0, 0);
     cout << "Ahora puedes ver la ciudad desde el horizonte" << endl;
     cout << "" << endl;
     cout << "Los valientes monstruos que te acompaniaran seran Godzilla y Rodan" << endl;
@@ -13,6 +13,7 @@ int main() {
     int turno = 0;
     int porcentaje;
     cout<<"La ciudad ha creado sus primeras defensas"<<endl;
+    cout<<"Ocho defensas se levantan desde la ciudad"<<endl;
     cout<<"----------------"<<endl;
     cout<<" \n";
     city.get_defensas();
@@ -30,15 +31,27 @@ int main() {
         cin >> input;
         for (int i = 0; i < 1; i++) {
             if (input == 'a') {
-                godzilla.ataque();
+                cout<<"A que defensa deseas atacar, escoge un numero del 1 al 8"<<endl;
+                cout<<"\n";
+                int elecciondefensa;
+                cin>>elecciondefensa;
+                Defensa defensa;
+                defensa=*city.defe[elecciondefensa];
+                ataque.ataque(&defensa,&godzilla);
                 i++;
             }
             else if (input == 'd') {
-                godzilla.destruir_ciudad(&city);
+                ataque.destruir_ciudad(&city,&godzilla);
                 i++;
             }
             else if (input == 'y') {
-                godzilla.ataque_especial();
+                cout<<"A que defensa deseas atacar, escoge un numero del 1 al 8"<<endl;
+                cout<<"\n";
+                int elecciondefensa1;
+                cin>>elecciondefensa1;
+                Defensa defensa1;
+                defensa1=*city.defe[elecciondefensa1];
+                ataque.ataque_especial(&defensa1,&godzilla);
             }
 
             else if (input == 'p') {
@@ -57,15 +70,27 @@ int main() {
         cin >> input2;
         for (int i = 0; i < 1; i++) {
             if (input2 == 'a') {
-                rodan.ataque();
+                cout<<"A que defensa deseas atacar, escoge un numero del 1 al 8"<<endl;
+                cout<<"\n";
+                int elecciondefensa2;
+                cin>>elecciondefensa2;
+                Defensa defensa2;
+                defensa2=*city.defe[elecciondefensa2];
+                ataque.ataque(&defensa2,&rodan);
                 i++;
             }
             else if (input2 == 'd') {
-                rodan.destruir_ciudad(&city);
+                ataque.destruir_ciudad(&city,&rodan);
                 i++;
             }
             else if (input2 == 'y') {
-                rodan.ataque_especial();
+                cout<<"A que defensa deseas atacar, escoge un numero del 1 al 8"<<endl;
+                cout<<"\n";
+                int elecciondefensa3;
+                cin>>elecciondefensa3;
+                Defensa defensa3;
+                defensa3=*city.defe[elecciondefensa3];
+                ataque.ataque_especial(&defensa3,&rodan);
             }
 
             else {
@@ -74,7 +99,16 @@ int main() {
         }
         cout<<"\n";
         cout<<"Turno de defensas"<<endl;
-        city.ordenar_ataque();
+        int num;
+        num=city.get_numero();
+        int i2;
+        i2=0;
+        for (int i = 0; i <num; i++) {
+            ataque.ordenar_ataque(&city,godzilla,i2);
+            i2++;
+        }
     }
+    cout<<"Destruiste la ciudad "<<city.get_nombre()<<endl;
+    cout<<"GANASTE, felicidades"<<endl;
     return 0;
 }
