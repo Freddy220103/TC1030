@@ -1,5 +1,5 @@
 //
-// Creado por Alfredo Gómez Mendoza el 07/06/2022.
+// Created by Usuario on 07/06/2022.
 //
 
 #ifndef RAMPAGE_ATAQUE_H
@@ -15,15 +15,15 @@ private:
     int i=0;
 public:
     void destruir_ciudad(Ciudad *ciudad, Monstruo *monstruo);
-    void ataque(Defensa *defensa, Monstruo *monstruo);
-    void ataque_especial(Defensa *defensa, Monstruo *monstruo);
-    void disparar(Defensa *defensa, Monstruo *monstruo);
+    void ataque(Ciudad *ciudad, Monstruo *monstruo, int i);
+    void ataque_especial(Ciudad *ciudad, Monstruo *monstruo,int i2);
+    void disparar(Ciudad *ciudad, Monstruo *monstruo, int i3);
     void transporte_disparar(Transporte *transporte, Monstruo *monstruo);
     void ordenar_ataque(Ciudad *ciudad, Monstruo &monstruo, int i2);
 };
 //PARTE DE MONSTRUO
 void Ataque::destruir_ciudad(Ciudad *ciudad, Monstruo *monstruo){
-    cout<<monstruo->get_nombre()<<" ha atacado la ciudad"<<endl;
+    monstruo->destruir_ciudad();
     ciudad->set_destruccion(monstruo->get_fuerza());
     cout<<"El porcentaje de destruccion actual es de:"<<ciudad->get_porcentaje();
     cout<<"\n";
@@ -31,27 +31,28 @@ void Ataque::destruir_ciudad(Ciudad *ciudad, Monstruo *monstruo){
         cout<<"El monstruo ha dado el último golpe a la ciudad"<<endl;
     }
 }
-void Ataque::ataque(Defensa *defensa, Monstruo *monstruo){
+void Ataque::ataque(Ciudad *ciudad, Monstruo *monstruo, int i){
     monstruo->ataque();
-    defensa->herirse(monstruo->get_fuerza());
+    ciudad->defe[i]->herirse(monstruo->get_fuerza());
 };
 
-void Ataque::ataque_especial(Defensa *defensa, Monstruo *monstruo){
+void Ataque::ataque_especial(Ciudad *ciudad, Monstruo *monstruo, int i2){
     monstruo->ataque_especial();
-    if (i%2==0){
-        monstruo->ataque();
-        i=i+3;
-    }
-    else{
-        cout<<"El ataque no pudo ser realizado porque aún no está cargado";
+    monstruo->ataque();
+    ciudad->defe[i2]->herirse(monstruo->get_fuerza());
+    if (monstruo->es_asesino==1){
+        ciudad->defe[i2]->mareado+=7;
     }
 }
 
-void Ataque::disparar(Defensa *defensa, Monstruo *monstruo){
-    defensa->disparar();
+void Ataque::disparar(Ciudad *ciudad, Monstruo *monstruo,int i3){
+    ciudad->defe[i3]->mareo();
     int force;
-    force= defensa->get_fuerza();
-    monstruo->herirse(force);
+    if (ciudad->defe[i3]->mareado%2!=0){
+        force= ciudad->defe[i3]->get_fuerza();
+        monstruo->herirse(force);
+    }
+
 }
 
 /*void Ataque::transporte_disparar(Transporte *transporte, Monstruo *monstruo){
@@ -63,7 +64,7 @@ void Ataque::disparar(Defensa *defensa, Monstruo *monstruo){
     }
 }
 */
-void Ataque::ordenar_ataque(Ciudad*ciudad, Monstruo &monstruo, int i2) {
+/*void Ataque::ordenar_ataque(Ciudad*ciudad, Monstruo &monstruo, int i2) {
 
     if (i % 2 == 0) {
             cout<<"La defensa #"<<i2+1;
@@ -76,5 +77,6 @@ void Ataque::ordenar_ataque(Ciudad*ciudad, Monstruo &monstruo, int i2) {
             i=i+=9;
 
         }
-}
+}*/
 #endif //RAMPAGE_ATAQUE_H
+
