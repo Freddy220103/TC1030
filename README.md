@@ -22,16 +22,16 @@ Cada uno de estas clases cuentan con sus accesor methods para poder funcionar.
 
 La clase Defensa como Monstruo cuentan con clases hijas, siendo que cada una de ellas cuenta con una habiilidad especial.
 
-La torre de hielo tiene como habilidad especial o métodos únicos el de congelar a un monstruo, siendo que la congelación haga que el movimiento ataque del monstruo pueda fallar.
+La torre de hielo tiene como habilidad especial o métodos únicos el de congelar a un monstruo, siendo que la congelación haga que la fuerza de ataque de un monstruo disminuya temporalmente.
 
 El transporte cuenta con un método especial, siendo que es la única defensa que puede lanzar un misil especial que hace un gran daño a la vida de los monstruos. Este movimiento tiene un cooldown, así que no siempre puede ser usado.
 
 
-El monstruo tanque tiene el método de proteger() y de ataque_destructor(). Proteger() hace que todas las defensas sólo lo puedan atacar a él durante un turno (mediante la modificación de atributo vida), mientras que ataque_destructor() consta de hacer un daño masivo a la estructura más cercana.
+El monstruo tanque tiene el método de proteger() y de ataque_destructor(). Proteger() hace que todas las defensas sean inmunes durante un turno (mediante la modificación de un atributo fuerza de las defensas), mientras que ataque_destructor() consta de hacer un daño masivo a la estructura más cercana.
 
-Por último el asesino sobreescribe el método ataque (Defensa) para multiplicar el daño  que tiene por el número de defensas a las cuales les ha bajado el atributo vida a 0 de un objeto defensa. Mientras que mareo(Defensa), puede hacer que el ataque de un objeto defensa fallé con una probabilidad del 40%. 
+Por último el asesino sobreescribe el método ataque (Defensa) para multiplicar el daño  que tiene por el número de defensas a las cuales les ha bajado el atributo vida a 0 de un objeto defensa. Mientras que mareo(Defensa), puede hacer que haya la probabilidad que el ataque de un objeto defensa falle.
 
 El cambio o modificación de un atributo es hecho mediante el uso de apuntadores y accesor methods.
 
 ## Consideraciones
-El programa solo corre en la consola y esta hecho con c++  por lo que corre en todos los sistemas operativos. Muchos atributos y objetos ya estarán declarados propiamente por el código y no por el jugador.
+El programa solo corre en la consola y esta hecho con c++  por lo que corre en todos los sistemas operativos. Muchos atributos y objetos ya estarán declarados propiamente por el código y no por el jugador. El punto del juego es que no se toque el código, sino la consola.
