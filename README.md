@@ -34,4 +34,4 @@ Por último el asesino sobreescribe el método ataque (Defensa) para multiplicar
 El cambio o modificación de un atributo es hecho mediante el uso de apuntadores y accesor methods.
 
 ## Consideraciones
-El programa solo corre en la consola y esta hecho con c++  por lo que corre en todos los sistemas operativos. Muchos atributos y objetos ya estarán declarados propiamente por el código y no por el jugador. El punto del juego es que no se toque el código, sino la consola.
+El programa solo corre en la consola y esta hecho con c++  por lo que corre en todos los sistemas operativos. Muchos atributos y objetos ya estarán declarados propiamente por el código y no por el jugador. El punto del juego es que no se toque el código, sino sólo se interactue con la consola.
