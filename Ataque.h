@@ -19,7 +19,6 @@ public:
     void ataque_especial(Ciudad *ciudad, Monstruo *monstruo,int i2);
     void disparar(Ciudad *ciudad, Monstruo *monstruo, int i3);
     void transporte_disparar(Transporte *transporte, Monstruo *monstruo);
-    void ordenar_ataque(Ciudad *ciudad, Monstruo &monstruo, int i2);
 };
 //PARTE DE MONSTRUO
 void Ataque::destruir_ciudad(Ciudad *ciudad, Monstruo *monstruo){
@@ -64,19 +63,5 @@ void Ataque::disparar(Ciudad *ciudad, Monstruo *monstruo,int i3){
     }
 }
 */
-/*void Ataque::ordenar_ataque(Ciudad*ciudad, Monstruo &monstruo, int i2) {
 
-    if (i % 2 == 0) {
-            cout<<"La defensa #"<<i2+1;
-            disparar(ciudad->defe[i2], &monstruo);
-            i=i+9;
-        }
-        else {
-            cout<<"La defensa #"<<i2+1;
-            ciudad->defe[i2]->activar_escudo();
-            i=i+=9;
-
-        }
-}*/
 #endif //RAMPAGE_ATAQUE_H
-
