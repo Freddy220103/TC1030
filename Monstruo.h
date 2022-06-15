@@ -22,12 +22,20 @@ public:
     virtual void ataque_especial()=0;
     void estadisticas_monstruo();
     void herirse(int fuerz);
+    void aniadir_energia(int ener);
     string get_nombre();
     void destruir_ciudad();
     int get_fuerza();
     int get_vida();
+    int get_energia();
 
 };
+void Monstruo::aniadir_energia(int ener){
+    energia+=ener;
+}
+int Monstruo::get_energia() {
+    return energia;
+}
 int Monstruo::get_vida(){
     return vida;
 }
@@ -130,7 +138,7 @@ public:
     Tanque(string nom, int vid, int fuerz) : Monstruo(nom, vid, fuerz){
         nombre=nom;
         vida=vid;
-        fuerz=fuerza;
+        fuerza=fuerz;
         energia=100;
         es_asesino=0;
     };
