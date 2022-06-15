@@ -8,8 +8,8 @@ int main() {
     cout << "Ahora puedes ver la ciudad desde el horizonte" << endl;
     cout << "" << endl;
     cout << "Los valientes monstruos que te acompaniaran seran Godzilla y Rodan" << endl;
-    Tanque godzilla("Godzilla",30,20);
-    Asesino rodan("Rodan",10,25);
+    Tanque godzilla("Godzilla",100,20);
+    Asesino rodan("Rodan",50,25);
     int turno = 0;
     int porcentaje;
     cout<<"La ciudad ha creado sus primeras defensas"<<endl;
@@ -22,6 +22,14 @@ int main() {
     muertegodzilla = 0;
     muerterodan=0;
     while (city.get_porcentaje() < 100) {
+        int suma;
+        suma=0;
+        for(int i=0; i<8; i++){
+            int vidadefensa;
+            vidadefensa=city.defe[i]->get_vida();
+            suma+=vidadefensa;
+
+        }
         cout << "\n¿Listos monstruos?\n";
         turno++;
         cout << "Turno: " << turno << "\n";
@@ -37,21 +45,41 @@ int main() {
             cin >> input;
             for (int i = 0; i < 1; i++) {
                 if (input == 'a') {
-                    cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
-                    cout << "\n";
-                    int elecciondefensa;
-                    cin >> elecciondefensa;
-                    ataque.ataque(&city, &godzilla, elecciondefensa);
-                    i++;
+                    if (suma > 0) {
+                        cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
+                        cout << "\n";
+                        int elecciondefensa;
+                        cin >> elecciondefensa;
+                        elecciondefensa = elecciondefensa - 1;
+                        ataque.ataque(&city, &godzilla, elecciondefensa);
+                        i++;
+                    }
+                    else{
+                        cout<<"Todas las defensas fueron destruidas, no puedes atacarlas mas"<<endl;
+                        cout<<"\n";
+                    }
                 } else if (input == 'd') {
                     ataque.destruir_ciudad(&city, &godzilla);
                     i++;
                 } else if (input == 'y') {
-                    cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
-                    cout << "\n";
-                    int elecciondefensa1;
-                    cin >> elecciondefensa1;
-                    ataque.ataque_especial(&city, &godzilla, elecciondefensa1);
+                    if(suma>0) {
+                        if(godzilla.get_energia()>=100) {
+                            cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
+                            cout << "\n";
+                            int elecciondefensa1;
+                            cin >> elecciondefensa1;
+                            elecciondefensa1 = elecciondefensa1 - 1;
+                            ataque.ataque_especial(&city, &godzilla, elecciondefensa1);
+                        }
+                        else{
+                            cout<<"La energia no es la suficiente"<<endl;
+                            cout<<"\n";
+                        }
+                    }
+                    else{
+                        cout<<"Todas las defensas fueron destruidas, no puedes atacarlas mas"<<endl;
+                        cout<<"\n";
+                    }
                 } else if (input == 'p') {
                     godzilla.proteger();
                 } else {
@@ -79,21 +107,41 @@ int main() {
                 if (input2 == 'a') {
                     cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
                     cout << "\n";
-                    int elecciondefensa2;
-                    cin >> elecciondefensa2;
-                    ataque.ataque(&city, &rodan, elecciondefensa2);
-                    i++;
+                    if(suma>0) {
+                        int elecciondefensa2;
+                        cin >> elecciondefensa2;
+                        elecciondefensa2 = elecciondefensa2 - 1;
+                        ataque.ataque(&city, &rodan, elecciondefensa2);
+                        i++;
+                    }
+                    else{
+                        cout<<"Todas las defensas fueron destruidas, no puedes atacarlas mas"<<endl;
+                        cout<<"\n";
+                    }
                 } else if (input2 == 'd') {
                     ataque.destruir_ciudad(&city, &rodan);
                     i++;
                 } else if (input2 == 'y') {
-                    cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
-                    cout << "\n";
-                    int elecciondefensa3;
-                    cin >> elecciondefensa3;
-                    Defensa defensa3;
-                    defensa3 = *city.defe[elecciondefensa3];
-                    ataque.ataque_especial(&city, &rodan, elecciondefensa3);
+                    if(suma) {
+                        if(rodan.get_energia()>=100) {
+                            cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
+                            cout << "\n";
+                            int elecciondefensa3;
+                            cin >> elecciondefensa3;
+                            elecciondefensa3 = elecciondefensa3 - 1;
+                            Defensa defensa3;
+                            defensa3 = *city.defe[elecciondefensa3];
+                            ataque.ataque_especial(&city, &rodan, elecciondefensa3);
+                        }
+                        else{
+                            cout<<"La energia no es la suficiente"<<endl;
+                            cout<<"\n";
+                        }
+                    }
+                    else{
+                        cout<<"Todas las defensas fueron destruidas, no puedes atacarlas mas"<<endl;
+                        cout<<"\n";
+                    }
                 } else {
                     cout << "Opcion no valida" << endl;
                 }
@@ -107,34 +155,56 @@ int main() {
         }
         cout << "\n";
         if (godzilla.get_vida() <= 0 && rodan.get_vida() <= 0) {
+            cout<<"Ambos monstruos han muerto"<<endl;
             break;
         }
-        cout << "Turno de defensas" << endl;
-        int num, i2, i3;
-        num = city.get_numero();
-        i2 = 0;
-        i3 = 0;
-        for (int i = 0; i < num; i++) {
+        if(city.get_porcentaje()<100) {
+            if (suma > 0) {
 
-            if (i3 % 2 == 0) {
-                cout<<"\n";
-                cout<<"Ataque dirigido hacia "<<godzilla.get_nombre()<<"\n";
-                cout << "La defensa #" << i2 + 1;
-                ataque.disparar(&city, &godzilla, i2);
+                cout << "Turno de defensas" << endl;
+                int num, i2, i3;
+                num = city.get_numero();
+                i2 = 0;
+                i3 = 0;
+                for (int i = 0; i < num; i++) {
 
-                cout<<"\n";
-                cout<<"Ataque dirigido hacia "<<rodan.get_nombre()<<"\n";
-                cout << "La defensa #" << i2 + 1;
-                ataque.disparar(&city, &rodan, i2);
-                i3 = i3 + 9;
+                    if (i3 % 2 == 0) {
+                        if (city.defe[i2]->get_vida() > 0) {
+                            cout << "\n";
+                            cout << "Ataque dirigido hacia " << godzilla.get_nombre() << "\n";
+                            cout << "La defensa #" << i2 + 1;
+                            ataque.disparar(&city, &godzilla, i2);
+
+                            cout << "\n";
+                            cout << "Ataque dirigido hacia " << rodan.get_nombre() << "\n";
+                            cout << "La defensa #" << i2 + 1;
+                            ataque.disparar(&city, &rodan, i2);
+                            i3 = i3 + 9;
+                        } else {
+                            cout << "La defensa # " << i2 + 1 << " fue destruida" << endl;
+                            godzilla.aniadir_energia(20);
+                            rodan.aniadir_energia(30);
+                        }
+                    } else {
+                        if (city.defe[i2]->get_vida() > 0) {
+                            cout << "La defensa #" << i2 + 1;
+                            city.defe[i2]->activar_escudo();
+                            i3 = i3 += 9;
+                        } else {
+                            cout << "La defensa # " << i2 + 1 << " fue destruida" << endl;
+                            godzilla.aniadir_energia(20);
+                            rodan.aniadir_energia(30);
+                        }
+
+                    }
+
+                    i2++;
+                }
             } else {
-                cout << "La defensa #" << i2 + 1;
-                city.defe[i2]->activar_escudo();
-                i3 = i3 += 9;
-
+                cout << "Todas las defensas fueron destruidas" << endl;
+                cout << "Es tu momento de atacar la ciudad" << endl;
+                cout<<"\n";
             }
-
-            i2++;
         }
 
         if (muertegodzilla == 0) {
@@ -153,7 +223,7 @@ int main() {
 
     }
     cout<<"\n"<<endl;
-    if(city.get_porcentaje()==100){
+    if(city.get_porcentaje()>=100){
         cout<<"Destruiste la ciudad "<<city.get_nombre()<<endl;
         cout<<"GANASTE, felicidades"<<endl;
     }
