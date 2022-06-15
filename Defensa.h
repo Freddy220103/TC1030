@@ -24,10 +24,14 @@ public:
     void activar_escudo();
     void set_fuerza(int fuerz);
     int get_fuerza();
+    int get_vida();
     //Defensa& operator= (const Defensa&);
     void mareo();
 
 };
+int Defensa::get_vida(){
+    return vida;
+}
 int Defensa::get_fuerza(){
     return fuerza;
 }
@@ -54,6 +58,9 @@ void Defensa::activar_escudo(){
 void Defensa::herirse(int fuerz){
     cout<<"Has daniado a la defensa"<<endl;
     vida=vida-fuerz;
+    if (vida<0){
+        vida=0;
+    }
 };
 
 void Defensa::mareo(){
