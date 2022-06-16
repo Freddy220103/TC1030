@@ -1,5 +1,20 @@
-#include <iostream>
-#include "Ataque.h"
+/*
+ * Proyecto Rampage main
+ * Alfredo Gómez Mendoza
+ * A01704696
+ * 16/06/2022
+ *
+ * El programa es un videojuego de turnos tipo Pokemón.
+ * El juego tiene una idea simple, hay una ciudad con un porcentaje de destrucción,
+ * siendo que este porcentaje de destrucción irá aumentando cada vez que un monstruo lo ataque.
+ * El jugador (ósease el que use el código) tendrá que llegar al porcentaje de destrucción de la ciudad al 100%.
+ * Cuando se llegue a este porcentaje, el juego termina. Sin embargo, no será tan sencillo,
+ * ya que la ciudad puede generar defensas de dos diferentes tipos que atacan a los monstruos
+ * para evitar la destrucción total del lugar. Los monstruos deben destruir las defensas para no morir con un ataque
+ * simple y un ataque especial. Las defensas también pueden hacer uso de un disparo base y una habilidad especial.
+ */
+#include <iostream> //para imprimir
+#include "Ataque.h" //biblioteca que incluye las demás librerías del juego.
 
 using namespace std;
 int main() {
@@ -36,7 +51,7 @@ int main() {
         city.get_citystats();
         cout << "  " << endl;
         cout << "  " << endl;
-        if (godzilla.get_vida() >= 0) {
+        if (godzilla.get_vida() >0) {
             godzilla.estadisticas_monstruo();
             cout
                     << "¿Que quieres hacer con Godzilla?\n\na - Atacar defensas\nd - Destruir ciudad\ny - Ataque destructor\np - Proteger\n"
@@ -97,7 +112,7 @@ int main() {
         }
 
 
-        if (rodan.get_vida() >= 0) {
+        if (rodan.get_vida() > 0) {
             rodan.estadisticas_monstruo();
             cout << "¿Que quieres hacer con Rodan?\n\na - Atacar defensas\nd - Destruir ciudad\ny - Habilidad Mareo"
                  << endl;
@@ -214,10 +229,10 @@ int main() {
             muertegodzilla += 1;
         }
         if (muerterodan == 0) {
-        if (rodan.get_vida() <= 0) {
-            cout << "Oh no le han dado a " << rodan.get_nombre() << " mientras volaba, el demonio de fuego ha caido"
-                 << endl;
-        }
+            if (rodan.get_vida() <= 0) {
+                cout << "Oh no le han dado a " << rodan.get_nombre() << " mientras volaba, el demonio de fuego ha caido"
+                     << endl;
+            }
             muerterodan += 1;
         }
 
