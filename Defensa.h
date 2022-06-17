@@ -8,7 +8,6 @@
  * Esta clase defina objeto de tipo Defensa que contiene las clases heredadas
  * Torreta y Transporte.
  */
-//FALTA DEFINIR LOS ESCUDOS Y EL ATAQUE DE TRANSPORTE
 #ifndef DEFENSA_H_
 #define DEFENSA_H_
 #include <string>
@@ -26,7 +25,10 @@ class Defensa{
 
     //Declaro los métodos y atributos públicos que va a tener el objeto
     public:
+        int ralentizar;
         int mareado;
+        int es_torreta;
+        int cooldown;
         Defensa(){}; //constructor por default
         Defensa(string nom, int vid, int fuerz,string estad)
                 :nombre(nom),vida(vid),fuerza(fuerz){};
@@ -37,7 +39,7 @@ class Defensa{
         void set_fuerza(int fuerz);
 
         virtual string get_stats(); //método virtual
-        void disparar();
+        virtual void disparar();
         void herirse(int fuerza);
         void activar_escudo();
         void mareo();
@@ -146,13 +148,9 @@ void Defensa::mareo(){
 //Declaro objeto Torreta que hereda de Defensa
 class Torreta:public Defensa{
 
-    //Declaro las variables de instancia privadas
-private:
-    int ralentizar;
-
-    //Declaro metodos públicos y constructores
+    //Declaro metodos y atributos públicos
 public:
-
+    int ralentizar;
     Torreta():Defensa("Torreta de hielo", 50,
                       2,"vivo"){};//constructor por default
     Torreta(string nom, int vid, int fuerz, string estad)
@@ -161,8 +159,10 @@ public:
         vida=vid;
         fuerza=fuerz;
         estado=estad;
-        ralentizar=10;
+        ralentizar=4;
         mareado=3;
+        es_torreta=1;
+        cooldown=1;
     };
 
     string get_stats();
@@ -188,11 +188,6 @@ string Torreta::get_stats() {
 //Declaro objeto Transporte que hereda de Defensa
 class Transporte:public Defensa{
 
-    //Variables privadas del objeto
-private:
-
-    int cooldown;
-
     //Metodos públicos del objeto
 public:
 
@@ -204,8 +199,10 @@ public:
         vida=vid;
         fuerza=fuerz;
         estado=estad;
-        cooldown=0;
+        cooldown=1;
         mareado=3;
+        es_torreta=0;
+        ralentizar=0;
     };
 
     int get_cooldown();
@@ -247,13 +244,12 @@ string Transporte::get_stats() {
  */
 
 void Transporte::disparar(){
-    stringstream aux;
     if (cooldown==0){
         cout<<" de tipo transporte ha disparado"<<endl;
         cooldown=1;
     }
     else{
-        cout<<" intentó atacar pero tiene que recargar"<<endl;
+        cout<<" intento atacar pero tiene que recargar"<<endl;
         cooldown=0;
     }
 
