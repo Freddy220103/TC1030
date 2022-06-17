@@ -5,14 +5,18 @@
  * 16/06/2022
  *
  * El programa es un videojuego de turnos tipo Pokemón.
- * El juego tiene una idea simple, hay una ciudad con un porcentaje de destrucción,
- * siendo que este porcentaje de destrucción irá aumentando cada vez que un monstruo lo ataque.
- * El jugador (ósease el que use el código) tendrá que llegar al porcentaje de destrucción de la ciudad al 100%.
- * Cuando se llegue a este porcentaje, el juego termina. Sin embargo, no será tan sencillo,
- * ya que la ciudad puede generar defensas de dos diferentes tipos que atacan a los monstruos
- * para evitar la destrucción total del lugar. Los monstruos deben destruir las defensas para no morir con un ataque
- * simple y un ataque especial. Las defensas también pueden hacer uso de un disparo base y una habilidad especial.
+ * El juego tiene una idea simple, hay una ciudad con un porcentaje de
+ * destrucción, siendo que este porcentaje de destrucción irá aumentando cada
+ * vez que un monstruo lo ataque. El jugador (ósease el que use el código)
+ * tendrá que llegar al porcentaje de destrucción de la ciudad al 100%. Cuando
+ * se llegue a este porcentaje, el juego termina. Sin embargo, no será tan
+ * sencillo, ya que la ciudad puede generar defensas de dos diferentes tipos
+ * que atacan a los monstruos para evitar la destrucción total del lugar.
+ * Los monstruos deben destruir las defensas para no morir con un ataque simple
+ * y un ataque especial. Las defensas también pueden hacer uso de un disparo
+ * base y una habilidad especial.
  */
+
 #include <iostream> //para imprimir
 #include "Ataque.h" //biblioteca que incluye las demás librerías del juego.
 
@@ -249,4 +253,3 @@ int main() {
 
     return 0;
 }
-
