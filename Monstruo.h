@@ -36,6 +36,7 @@ public:
 
     void estadisticas_monstruo();
     void herirse(int fuerz);
+    void congelar(int ralentizacion);
     void destruir_ciudad();
 
     //getters y setters
@@ -111,6 +112,30 @@ void Monstruo::herirse(int fuerz){
         cout<<"Los latidos de tu monstruo se comienzan a detener\n";
     }
 };
+/**
+ * congelar saca a la consola un mensaje y cambia la fuerza del monstruo
+ *
+ * Saca un mensaje a la consola para después modificar la fuerza. Resta fuerza menos
+ * ralentizacion. Usa un if statement, siendo si la fuerza es menor o igual a 1,
+ * le sumará 2 puntos de fuerza al monstruo.
+ * En el caso contrario hará la resta.
+ *
+ * @param fuerz del tipo int
+ * @return
+ */
+
+void Monstruo::congelar(int ralentizacion){
+    cout<<"Han congelado tu monstruo"<<endl;
+    if(fuerza<=1) {
+        fuerza=fuerza+20;
+        cout<<"El monstruo ya es inmune al frio y lo ha hecho mas fuerte"<<endl;
+        cout<<"Esta inmunidad es temporal\n";
+    }
+    else{
+        fuerza=fuerza-ralentizacion;
+
+    }
+};
 
 /**
  * estadisticas_monstruo imprime varios mensaje
@@ -170,7 +195,7 @@ public:
     Asesino(string nom, int vid, int fuerz) : Monstruo(nom, vid, fuerz){
         nombre=nom;
         vida=vid;
-        fuerz=fuerza;
+        fuerza=fuerz;
         resultado=0;
         energia=100;
         es_asesino=1;
