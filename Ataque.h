@@ -5,44 +5,53 @@
  * A01704189
  * 16/06/2022
  * version : 4
- * La clase define objetos de tipo Ataque que contiene las demás clases que son Ciudad, Defensa y Monstruo.
- * Esta clase tiene el objetivo de evitar una dependencia circular, ya que las 3 clases antes mencionadas interactuan
- * entre sí. Con lo anterior los objetos de tipo ataque pueden llamar métodos para modificar atributos de las clases
- * Ciudad, Defensa y Monstruo.
+ * La clase define objetos de tipo Ataque que contiene las demás clases que son
+ * Ciudad, Defensa y Monstruo. Esta clase tiene el objetivo de evitar una
+ * dependencia circular, ya que las 3 clases antes mencionadas interactuan
+ * entre sí. Con lo anterior los objetos de tipo ataque pueden llamar
+ * métodos para modificar atributos de las clases Ciudad, Defensa
+ * y Monstruo.
  */
 #ifndef RAMPAGE_ATAQUE_H
 #define RAMPAGE_ATAQUE_H
 #include <iostream>
-#include "Ciudad.h"
+#include "Ciudad.h" //bibliotecas con mis objetos a usar
 #include "Defensa.h"
 #include "Monstruo.h"
 using namespace std;
 
 //Declaracion de clase ataque
 class Ataque{
-private:
-    //Declaro variables que se usaran dentro de los métodos
-    int i=0;
-    //Declaro los métodos que va a tener el objeto
-public:
-    Ataque(){};//constructor por default
-    void destruir_ciudad(Ciudad *ciudad, Monstruo *monstruo);
-    void ataque(Ciudad *ciudad, Monstruo *monstruo, int i);
-    void ataque_especial(Ciudad *ciudad, Monstruo *monstruo,int i2);
-    void disparar(Ciudad *ciudad, Monstruo *monstruo, int i3);
-    void transporte_disparar(Transporte *transporte, Monstruo *monstruo);
+
+    private:
+        //Declaro variables que se usaran dentro de los métodos
+        int i=0;
+        //Declaro los métodos que va a tener el objeto
+
+    public:
+
+        //Declaro constructor por default y metodos públicos.
+        Ataque(){};//constructor por default
+        void destruir_ciudad(Ciudad *ciudad, Monstruo *monstruo);
+        void ataque(Ciudad *ciudad, Monstruo *monstruo, int i);
+        void ataque_especial(Ciudad *ciudad, Monstruo *monstruo,int i2);
+        void disparar(Ciudad *ciudad, Monstruo *monstruo, int i3);
+        void transporte_disparar(Transporte *transporte, Monstruo *monstruo);
 };
 
 /**
  * destruir_ciudad llama un método de ciudad
  *|
- * El método llama el método destruir_ciudad() de un objeto monstruo tipo apuntador, también llama el método
- * set_destruccion de un objeto ciudad. Al llamarlo pone como parámetro el método de monstruo llamado get_fuerza().
- * También saca a la consola un mensaje junto con lo que regresa el método get_porcentaje() de un objeto ciudad.
- * Al final mediante un if statement checa si lo que regresa el método get_porcentaje de un objeto ciudad es igual a 100.
- * Si esto se cumple, regresa otro mensaje.
+ * El método llama el método destruir_ciudad() de un objeto monstruo tipo
+ * apuntador, también llama el método set_destruccion de un objeto ciudad. Al
+ * llamarlo pone como parámetro el método de monstruo llamado get_fuerza().
+ * También saca a la consola un mensaje junto con lo que regresa el método
+ * get_porcentaje() de un objeto ciudad. Al final mediante un if statement checa
+ * si lo que regresa el método get_porcentaje de un objeto ciudad es igual a
+ * 100. Si esto se cumple, regresa otro mensaje.
  *
- * @param Ciudad  del objeto apuntador ciudad, Monstruo del objeto apuntador monstruo
+ * @param Ciudad  del objeto apuntador ciudad, Monstruo del objeto apuntador
+ * monstruo
  * @return
  */
 
@@ -55,31 +64,35 @@ void Ataque::destruir_ciudad(Ciudad *ciudad, Monstruo *monstruo){
         cout<<"El monstruo ha dado el último golpe a la ciudad"<<endl;
     }
 }
-
 /**
  * ataque llama un método de monstruo y defensa
  *
- * Llama el método del objeto monstruo apuntador de los parámetros. También llama un método de un objeto tipo defensa
- * y mete como parámetro el método del objeto monstruo apuntador. El objeto defensa lo saca de un array que esta en
+ * Llama el método del objeto monstruo apuntador de los parámetros. También
+ * llama un método de un objeto tipo defensa y mete como parámetro el método del
+ * objeto monstruo apuntador. El objeto defensa lo saca de un array que esta en
  * el objeto apuntador tipo ciudad.
  *
- * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto apuntador monstruo, entero i2
+ * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto apuntador
+ * monstruo, entero i2
  * @return
  */
 void Ataque::ataque(Ciudad *ciudad, Monstruo *monstruo, int i){
     monstruo->ataque();
     ciudad->defe[i]->herirse(monstruo->get_fuerza());
 };
-
 /**
  * ataque_especial llama un método de monstruo y defensa
  *
- * Llama el método del objeto monstruo apuntador de los parámetros. También llama un método de un objeto tipo defensa
- * y mete como parámetro el método del objeto monstruo apuntador. El objeto defensa lo saca de un array que esta en
- * el objeto apuntador tipo ciudad. También tiene un if statement en el caso que el monstruo tenga el atributo asesino
- * como 1. En este caso en vez de llamar el método herirse de un objeto defensa, llama el método mareado.
+ * Llama el método del objeto monstruo apuntador de los parámetros. También
+ * llama un método de un objeto tipo defensa y mete como parámetro el método
+ * del objeto monstruo apuntador. El objeto defensa lo saca de un array que
+ * esta en el objeto apuntador tipo ciudad. También tiene un if statement
+ * en el caso que el monstruo tenga el atributo asesino como 1. En este caso
+ * en vez de llamar el método herirse de un objeto defensa, llama el método
+ * mareado.
  *
- * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto apuntador monstruo, entero i2
+ * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto apuntador
+ * monstruo, entero i2
  * @return
  */
 
@@ -95,11 +108,13 @@ void Ataque::ataque_especial(Ciudad *ciudad, Monstruo *monstruo, int i2){
 /**
  * disparar llama un método de monstruo y defensa
  *
- * Llama el método mareo() del objeto defensa apuntador que viene desde el objeto apuntador ciudad de los parámetros.
- * También tiene un if statement en el cúal si se cumple la condición llama un método de un objeto tipo monstruo
+ * Llama el método mareo() del objeto defensa apuntador que viene desde el
+ * objeto apuntador ciudad de los parámetros. También tiene un if statement en
+ * el cúal si se cumple la condición llama un método de un objeto tipo monstruo
  * y mete como parámetro a la variable force.
  *
- * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto apuntador monstruo, entero i3
+ * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto
+ * apuntador monstruo, entero i3
  * @return
  */
 
@@ -124,4 +139,3 @@ void Ataque::disparar(Ciudad *ciudad, Monstruo *monstruo,int i3){
 */
 
 #endif //RAMPAGE_ATAQUE_H
-
