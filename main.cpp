@@ -1,255 +1,137 @@
 /*
- * Proyecto Rampage main
- * Alfredo Gómez Mendoza
- * A01704696
- * 16/06/2022
  *
- * El programa es un videojuego de turnos tipo Pokemón.
- * El juego tiene una idea simple, hay una ciudad con un porcentaje de
- * destrucción, siendo que este porcentaje de destrucción irá aumentando cada
- * vez que un monstruo lo ataque. El jugador (ósease el que use el código)
- * tendrá que llegar al porcentaje de destrucción de la ciudad al 100%. Cuando
- * se llegue a este porcentaje, el juego termina. Sin embargo, no será tan
- * sencillo, ya que la ciudad puede generar defensas de dos diferentes tipos
- * que atacan a los monstruos para evitar la destrucción total del lugar.
- * Los monstruos deben destruir las defensas para no morir con un ataque simple
- * y un ataque especial. Las defensas también pueden hacer uso de un disparo
- * base y una habilidad especial.
+ * Proyecto Rampage clase Ataque
+ * Alfredo Gómez Mendoza
+ * A01704189
+ * 16/06/2022
+ * version : 4
+ * La clase define objetos de tipo Ataque que contiene las demás clases que son
+ * Ciudad, Defensa y Monstruo. Esta clase tiene el objetivo de evitar una
+ * dependencia circular, ya que las 3 clases antes mencionadas interactuan
+ * entre sí. Con lo anterior los objetos de tipo ataque pueden llamar
+ * métodos para modificar atributos de las clases Ciudad, Defensa
+ * y Monstruo.
+ */
+#ifndef RAMPAGE_ATAQUE_H
+#define RAMPAGE_ATAQUE_H
+#include <iostream>
+#include "Ciudad.h" //bibliotecas con mis objetos a usar
+#include "Defensa.h"
+#include "Monstruo.h"
+using namespace std;
+
+//Declaracion de clase ataque
+class Ataque{
+
+    private:
+        //Declaro variables que se usaran dentro de los métodos
+        int i=0;
+        //Declaro los métodos que va a tener el objeto
+
+    public:
+
+        //Declaro constructor por default y metodos públicos.
+        Ataque(){};//constructor por default
+        void destruir_ciudad(Ciudad *ciudad, Monstruo *monstruo);
+        void ataque(Ciudad *ciudad, Monstruo *monstruo, int i);
+        void ataque_especial(Ciudad *ciudad, Monstruo *monstruo,int i2);
+        void disparar(Ciudad *ciudad, Monstruo *monstruo, int i3);
+};
+
+/**
+ * destruir_ciudad llama un método de ciudad
+ *|
+ * El método llama el método destruir_ciudad() de un objeto monstruo tipo
+ * apuntador, también llama el método set_destruccion de un objeto ciudad. Al
+ * llamarlo pone como parámetro el método de monstruo llamado get_fuerza().
+ * También saca a la consola un mensaje junto con lo que regresa el método
+ * get_porcentaje() de un objeto ciudad. Al final mediante un if statement checa
+ * si lo que regresa el método get_porcentaje de un objeto ciudad es igual a
+ * 100. Si esto se cumple, regresa otro mensaje.
+ *
+ * @param Ciudad  del objeto apuntador ciudad, Monstruo del objeto apuntador
+ * monstruo
+ * @return
  */
 
-#include <iostream> //para imprimir
-#include "Ataque.h" //biblioteca que incluye las demás librerías del juego.
-
-using namespace std;
-int main() {
-    Ataque ataque;
-    Ciudad city("Queretabasco", 0, 0);
-    cout << "Ahora puedes ver la ciudad desde el horizonte" << endl;
-    cout << "" << endl;
-    cout << "Los valientes monstruos que te acompaniaran seran Godzilla y Rodan" << endl;
-    Tanque godzilla("Godzilla",100,20);
-    Asesino rodan("Rodan",50,25);
-    int turno = 0;
-    int porcentaje;
-    cout<<"La ciudad ha creado sus primeras defensas"<<endl;
-    cout<<"Ocho defensas se levantan desde la ciudad"<<endl;
-    cout<<"----------------"<<endl;
-    cout<<" \n";
-    city.get_defensas();
+void Ataque::destruir_ciudad(Ciudad *ciudad, Monstruo *monstruo){
+    monstruo->destruir_ciudad();
+    ciudad->set_destruccion(monstruo->get_fuerza());
+    cout<<"El porcentaje de destruccion actual es de:"<<ciudad->get_porcentaje();
     cout<<"\n";
-    int muertegodzilla, muerterodan;
-    muertegodzilla = 0;
-    muerterodan=0;
-    while (city.get_porcentaje() < 100) {
-        int suma;
-        suma=0;
-        for(int i=0; i<8; i++){
-            int vidadefensa;
-            vidadefensa=city.defe[i]->get_vida();
-            suma+=vidadefensa;
-
-        }
-        cout << "\n¿Listos monstruos?\n";
-        turno++;
-        cout << "Turno: " << turno << "\n";
-        city.get_citystats();
-        cout << "  " << endl;
-        cout << "  " << endl;
-        if (godzilla.get_vida() >0) {
-            godzilla.estadisticas_monstruo();
-            cout
-                    << "¿Que quieres hacer con Godzilla?\n\na - Atacar defensas\nd - Destruir ciudad\ny - Ataque destructor\np - Proteger\n"
-                    << endl;
-            char input;
-            cin >> input;
-            for (int i = 0; i < 1; i++) {
-                if (input == 'a') {
-                    if (suma > 0) {
-                        cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
-                        cout << "\n";
-                        int elecciondefensa;
-                        cin >> elecciondefensa;
-                        elecciondefensa = elecciondefensa - 1;
-                        ataque.ataque(&city, &godzilla, elecciondefensa);
-                        i++;
-                    }
-                    else{
-                        cout<<"Todas las defensas fueron destruidas, no puedes atacarlas mas"<<endl;
-                        cout<<"\n";
-                    }
-                } else if (input == 'd') {
-                    ataque.destruir_ciudad(&city, &godzilla);
-                    i++;
-                } else if (input == 'y') {
-                    if(suma>0) {
-                        if(godzilla.get_energia()>=100) {
-                            cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
-                            cout << "\n";
-                            int elecciondefensa1;
-                            cin >> elecciondefensa1;
-                            elecciondefensa1 = elecciondefensa1 - 1;
-                            ataque.ataque_especial(&city, &godzilla, elecciondefensa1);
-                        }
-                        else{
-                            cout<<"La energia no es la suficiente"<<endl;
-                            cout<<"\n";
-                        }
-                    }
-                    else{
-                        cout<<"Todas las defensas fueron destruidas, no puedes atacarlas mas"<<endl;
-                        cout<<"\n";
-                    }
-                } else if (input == 'p') {
-                    godzilla.proteger();
-                } else {
-                    cout << "Opcion no valida" << endl;
-                }
-
-
-            }
-        }
-        cout << "\n";
-        if (godzilla.get_vida() <= 0) {
-            cout << "R I P" << endl;
-            cout << godzilla.get_nombre() << " ha muerto, ya no esta disponible para pelear\n";
-
-        }
-
-
-        if (rodan.get_vida() > 0) {
-            rodan.estadisticas_monstruo();
-            cout << "¿Que quieres hacer con Rodan?\n\na - Atacar defensas\nd - Destruir ciudad\ny - Habilidad Mareo"
-                 << endl;
-            char input2;
-            cin >> input2;
-            for (int i = 0; i < 1; i++) {
-                if (input2 == 'a') {
-                    cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
-                    cout << "\n";
-                    if(suma>0) {
-                        int elecciondefensa2;
-                        cin >> elecciondefensa2;
-                        elecciondefensa2 = elecciondefensa2 - 1;
-                        ataque.ataque(&city, &rodan, elecciondefensa2);
-                        i++;
-                    }
-                    else{
-                        cout<<"Todas las defensas fueron destruidas, no puedes atacarlas mas"<<endl;
-                        cout<<"\n";
-                    }
-                } else if (input2 == 'd') {
-                    ataque.destruir_ciudad(&city, &rodan);
-                    i++;
-                } else if (input2 == 'y') {
-                    if(suma) {
-                        if(rodan.get_energia()>=100) {
-                            cout << "A que defensa deseas atacar, escoge un numero del 1 al 8" << endl;
-                            cout << "\n";
-                            int elecciondefensa3;
-                            cin >> elecciondefensa3;
-                            elecciondefensa3 = elecciondefensa3 - 1;
-                            Defensa defensa3;
-                            defensa3 = *city.defe[elecciondefensa3];
-                            ataque.ataque_especial(&city, &rodan, elecciondefensa3);
-                        }
-                        else{
-                            cout<<"La energia no es la suficiente"<<endl;
-                            cout<<"\n";
-                        }
-                    }
-                    else{
-                        cout<<"Todas las defensas fueron destruidas, no puedes atacarlas mas"<<endl;
-                        cout<<"\n";
-                    }
-                } else {
-                    cout << "Opcion no valida" << endl;
-                }
-            }
-        }
-        cout << "\n";
-        if (rodan.get_vida() <= 0) {
-            cout << "R I P" << endl;
-            cout << rodan.get_nombre() << " ha muerto, ya no esta disponible para pelear\n";
-
-        }
-        cout << "\n";
-        if (godzilla.get_vida() <= 0 && rodan.get_vida() <= 0) {
-            cout<<"Ambos monstruos han muerto"<<endl;
-            break;
-        }
-        if(city.get_porcentaje()<100) {
-            if (suma > 0) {
-
-                cout << "Turno de defensas" << endl;
-                int num, i2, i3;
-                num = city.get_numero();
-                i2 = 0;
-                i3 = 0;
-                for (int i = 0; i < num; i++) {
-
-                    if (i3 % 2 == 0) {
-                        if (city.defe[i2]->get_vida() > 0) {
-                            cout << "\n";
-                            cout << "Ataque dirigido hacia " << godzilla.get_nombre() << "\n";
-                            cout << "La defensa #" << i2 + 1;
-                            ataque.disparar(&city, &godzilla, i2);
-
-                            cout << "\n";
-                            cout << "Ataque dirigido hacia " << rodan.get_nombre() << "\n";
-                            cout << "La defensa #" << i2 + 1;
-                            ataque.disparar(&city, &rodan, i2);
-                            i3 = i3 + 9;
-                        } else {
-                            cout << "La defensa # " << i2 + 1 << " fue destruida" << endl;
-                            godzilla.aniadir_energia(20);
-                            rodan.aniadir_energia(30);
-                        }
-                    } else {
-                        if (city.defe[i2]->get_vida() > 0) {
-                            cout << "La defensa #" << i2 + 1;
-                            city.defe[i2]->activar_escudo();
-                            i3 = i3 += 9;
-                        } else {
-                            cout << "La defensa # " << i2 + 1 << " fue destruida" << endl;
-                            godzilla.aniadir_energia(20);
-                            rodan.aniadir_energia(30);
-                        }
-
-                    }
-
-                    i2++;
-                }
-            } else {
-                cout << "Todas las defensas fueron destruidas" << endl;
-                cout << "Es tu momento de atacar la ciudad" << endl;
-                cout<<"\n";
-            }
-        }
-
-        if (muertegodzilla == 0) {
-            if (godzilla.get_vida() <= 0) {
-                cout << "Oh no " << godzilla.get_nombre() << " ha tenido una muerte trágica y dolorosa\n";
-            }
-            muertegodzilla += 1;
-        }
-        if (muerterodan == 0) {
-            if (rodan.get_vida() <= 0) {
-                cout << "Oh no le han dado a " << rodan.get_nombre() << " mientras volaba, el demonio de fuego ha caido"
-                     << endl;
-            }
-            muerterodan += 1;
-        }
-
+    if(ciudad->get_porcentaje()==100){
+        cout<<"El monstruo ha dado el último golpe a la ciudad"<<endl;
     }
-    cout<<"\n"<<endl;
-    if(city.get_porcentaje()>=100){
-        cout<<"Destruiste la ciudad "<<city.get_nombre()<<endl;
-        cout<<"GANASTE, felicidades"<<endl;
-    }
-    else{
-        cout<<"H A B E I S  P E R D I D O"<<endl;
-        cout<<"GAME OVER"<<endl;
-    }
-
-    return 0;
 }
+/**
+ * ataque llama un método de monstruo y defensa
+ *
+ * Llama el método del objeto monstruo apuntador de los parámetros. También
+ * llama un método de un objeto tipo defensa y mete como parámetro el método del
+ * objeto monstruo apuntador. El objeto defensa lo saca de un array que esta en
+ * el objeto apuntador tipo ciudad.
+ *
+ * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto apuntador
+ * monstruo, entero i2
+ * @return
+ */
+void Ataque::ataque(Ciudad *ciudad, Monstruo *monstruo, int i){
+    monstruo->ataque();
+    ciudad->defe[i]->herirse(monstruo->get_fuerza());
+};
+/**
+ * ataque_especial llama un método de monstruo y defensa
+ *
+ * Llama el método del objeto monstruo apuntador de los parámetros. También
+ * llama un método de un objeto tipo defensa y mete como parámetro el método
+ * del objeto monstruo apuntador. El objeto defensa lo saca de un array que
+ * esta en el objeto apuntador tipo ciudad. También tiene un if statement
+ * en el caso que el monstruo tenga el atributo asesino como 1. En este caso
+ * en vez de llamar el método herirse de un objeto defensa, llama el método
+ * mareado.
+ *
+ * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto apuntador
+ * monstruo, entero i2
+ * @return
+ */
+
+void Ataque::ataque_especial(Ciudad *ciudad, Monstruo *monstruo, int i2){
+    monstruo->ataque_especial();
+    monstruo->ataque();
+    ciudad->defe[i2]->herirse(monstruo->get_fuerza());
+    if (monstruo->es_asesino==1){
+        ciudad->defe[i2]->mareado+=7;
+    }
+}
+
+/**
+ * disparar llama un método de monstruo y defensa
+ *
+ * Llama el método mareo() del objeto defensa apuntador que viene desde el
+ * objeto apuntador ciudad de los parámetros. También tiene un if statement en
+ * el cúal si se cumple la condición podrá seguir con el código. Tiene otros dos if statements que
+ * dependiendo si se cumplan o no, llamarán a un método en especifico.
+ *
+ * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto
+ * apuntador monstruo, entero i3
+ * @return
+ */
+
+void Ataque::disparar(Ciudad *ciudad, Monstruo *monstruo,int i3){
+    ciudad->defe[i3]->mareo();
+    int force;
+    if (ciudad->defe[i3]->mareado%2!=0){
+        if(ciudad->defe[i3]->es_torreta==1){
+            monstruo->congelar(4);
+        }
+        force= ciudad->defe[i3]->get_fuerza();
+        if(ciudad->defe[i3]->cooldown==1){
+            monstruo->herirse(force);
+        }
+
+    }
+
+}
+
+
+#endif //RAMPAGE_ATAQUE_H
