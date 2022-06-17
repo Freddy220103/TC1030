@@ -67,10 +67,10 @@ void Ciudad::crear_defensas() {
     i=2;
     while (numero<8){
         //new crea el objeto en tiempo de ejecución para usar polimorfismo
-        defe[numero] = new Torreta("Torreta de hielo", 20,
+        defe[numero] = new Torreta("Torreta de hielo", 8,
                                    2,"vivo");
         numero++;
-        defe[numero] = new Transporte("Transporte misiles", 50,
+        defe[numero] = new Transporte("Transporte misiles", 25,
                                       12,"vivo");
         numero++;
     }
