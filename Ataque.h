@@ -36,7 +36,6 @@ class Ataque{
         void ataque(Ciudad *ciudad, Monstruo *monstruo, int i);
         void ataque_especial(Ciudad *ciudad, Monstruo *monstruo,int i2);
         void disparar(Ciudad *ciudad, Monstruo *monstruo, int i3);
-        void transporte_disparar(Transporte *transporte, Monstruo *monstruo);
 };
 
 /**
@@ -110,8 +109,8 @@ void Ataque::ataque_especial(Ciudad *ciudad, Monstruo *monstruo, int i2){
  *
  * Llama el método mareo() del objeto defensa apuntador que viene desde el
  * objeto apuntador ciudad de los parámetros. También tiene un if statement en
- * el cúal si se cumple la condición llama un método de un objeto tipo monstruo
- * y mete como parámetro a la variable force.
+ * el cúal si se cumple la condición podrá seguir con el código. Tiene otros dos if statements que
+ * dependiendo si se cumplan o no, llamarán a un método en especifico.
  *
  * @param Ciudad del objeto apuntador ciudad, Monstruo del objeto
  * apuntador monstruo, entero i3
@@ -122,20 +121,17 @@ void Ataque::disparar(Ciudad *ciudad, Monstruo *monstruo,int i3){
     ciudad->defe[i3]->mareo();
     int force;
     if (ciudad->defe[i3]->mareado%2!=0){
+        if(ciudad->defe[i3]->es_torreta==1){
+            monstruo->congelar(4);
+        }
         force= ciudad->defe[i3]->get_fuerza();
-        monstruo->herirse(force);
+        if(ciudad->defe[i3]->cooldown==1){
+            monstruo->herirse(force);
+        }
+
     }
 
 }
 
-/*void Ataque::transporte_disparar(Transporte *transporte, Monstruo *monstruo){
-    transporte->disparar();
-    int cools;
-    cools=transporte->get_cooldown();
-    if(cools==0){
-        transporte->disparar();
-    }
-}
-*/
 
 #endif //RAMPAGE_ATAQUE_H
