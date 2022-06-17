@@ -13,7 +13,7 @@ Ciudad:
  Tiene un porcentaje de destruccion y defensas. El porcentaje de destrucción de la ciudad indica si el juego se termina en caso que este porcentaje llegue a 100. El array de defensas guardará las defensas, debido a que los objetos defensa son parte de la ciudad (uso de composición).  Respecto a los métodos, solamente tenemos crear defensas, que será el método que cree objetos del tipo defensas para luego ser guardadas en el array de defensas. Este método es privado ya que solamente se llama cuando se crea la ciudad mediante un constructor.
  
 Monstruo:
- Tiene vida, fuerza de ataque, nombre. Respecto a los métodos, el primero que es ataque() comunica al usuario que su monstruo ha atacado a una defensa. El método destruir() comunica que el monstruo ha atacado la ciudad. Estos métodos son llamados por la clase ataque. Siendo que la funcionalidad de lo anterior esta definido por la clase ataque.
+ Tiene vida, fuerza de ataque, nombre. Respecto a los métodos, el primero que es ataque() comunica al usuario que su monstruo ha atacado a una defensa. El método destruir() comunica que el monstruo ha atacado la ciudad. Estos métodos son llamados por la clase ataque. Siendo que la funcionalidad de lo anterior esta definido por la clase ataque. También tiene un método herirse que funciona muy parecido al de la defensa. Por último consta de congelar(), que funciona de la misma manera que herirse(), sin embargo, en vez de afectar la vida afecta la fuerza. Si se llama mucho a este método y la fuerza llega a un número menor a 10, se le suman 100 puntos de fuerza al monstruo.
  
  Ataque:
  Esta clase fue hecha para evitar una dependencia circular entre Monstruo, Ciudad y Defensa. Tiene los métodos de ataque(Ciudad ciudad, Monstruo monstruo), ataque_especial(Ciudad ciudad, Monstruo monstruo), disparar(Ciudad ciudad, Monstruo monstruo) y destruir_ciudad(Ciudad ciudad, Monstruo monstruo). Cada parámetro debe ser un apuntador, para que modifique a su objeto original respectivo. Disparar, ataque_especial y ataque son método que cuando son llamados, mandan a llamar a la funcion herirse de cada clase a la cual se le quiera bajar la vida. Mientras que destruir_ciudad(), modifica el porcentaje de destrucción de la ciudad, tomando la fuerza del monstruo y restandosela al porcentaje de destrucción.
@@ -22,12 +22,12 @@ Cada uno de estas clases cuentan con sus accesor methods para poder funcionar.
 
 La clase Defensa como Monstruo cuentan con clases hijas, siendo que cada una de ellas cuenta con una habiilidad especial.
 
-La torre de hielo tiene como habilidad especial o métodos únicos el de congelar a un monstruo, siendo que la congelación haga que la fuerza de ataque de un monstruo disminuya temporalmente.
+La torre de hielo puede congelar a un monstruo, siendo que la congelación haga que la fuerza de ataque de un monstruo disminuya hasta que la fuerza del monstruo llega a 10.
 
 El transporte cuenta con un método especial, siendo que es la única defensa que puede lanzar un misil especial que hace un gran daño a la vida de los monstruos. Este movimiento tiene un cooldown, así que no siempre puede ser usado.
 
 
-El monstruo tanque tiene el método de proteger() y de ataque_destructor(). Proteger() hace que todas las defensas sean inmunes durante un turno (mediante la modificación de un atributo fuerza de las defensas), mientras que ataque_destructor() consta de hacer un daño masivo a la estructura más cercana.
+El monstruo tanque tiene el método de proteger() y de ataque_destructor(). Proteger() manda un mensaje a la consola, mientras que ataque_destructor() consta de hacer un daño masivo a la estructura más cercana.
 
 Por último el asesino sobreescribe el método ataque (Defensa) para multiplicar el daño  que tiene por el número de defensas a las cuales les ha bajado el atributo vida a 0 de un objeto defensa. Mientras que mareo(Defensa), puede hacer que haya la probabilidad que el ataque de un objeto defensa falle.
 
@@ -35,3 +35,6 @@ El cambio o modificación de un atributo es hecho mediante el uso de apuntadores
 
 ## Consideraciones
 El programa solo corre en la consola y esta hecho con c++  por lo que corre en todos los sistemas operativos. Muchos atributos y objetos ya estarán declarados propiamente por el código y no por el jugador. El punto del juego es que no se toque el código, sino sólo se interactue con la consola. El juego puede crashear en algunos inputs, por ejemplo, si se pide un número y se ingresa un string, el juego puede crashear.
+
+COMPETENCIAS.
+Se añadió sobrecarga, sobrescritura, uso de accesor methods y herencia al añadir un main.
